@@ -2,22 +2,25 @@ import image from '../assets/illustration-sign-up-desktop.svg'
 import imageMobile from '../assets/illustration-sign-up-mobile.svg'
 import success from '../assets/icon-success.svg'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const Subscribe = () => {
     const [email, setEmail] = useState("")
     const [error, setError] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!email.includes("@") || !email.includes(".")) {
+        if (email === "") {
             setError(true)
             setTimeout(() => {
                 setError(false)
             }, 3000);
+        } else {
+            navigate("/success")
         }
 
     }
@@ -54,13 +57,13 @@ const Subscribe = () => {
             <li className='flex'><img src={success} alt="success" className='w-5' /><p className='ml-4'>Measuring to ensure updates are a success</p></li>
             <li className='flex'><img src={success} alt="success" className='w-5' /><p className='ml-4'>And much more!</p></li>
           </ul>
-          <div className='mt-10 mb-2 flex justify-between max-sm:w-10/12'>
+          <div className='mt-10 mb-2 flex justify-between w-10/12 max-sm:w-8/12'>
           <span className='text-sm font-bold'>Email address</span>
           {error && <span className='text-sm font-bold text-red-500'> Valid email required</span>}
           </div>
           <form onSubmit={handleSubmit} className='flex flex-col'>
           <input type="email" placeholder='email@company.com' className={`w-[23rem] border p-[.8rem] rounded-lg px-5 text-sm ${error && "border-red-500 bg-red-100 outline-red-500"} max-sm:w-[20.5rem]`} onChange={handleChange} />
-          <Link to="/success"><button className='dark-slate-grey text-white rounded-lg py-[.8rem] w-[23rem] mt-5 active:bg-red-400 max-sm:w-[20.5rem]'>Subscribe to monthly newsletter</button></Link>
+          <button className='dark-slate-grey text-white rounded-lg py-[.8rem] w-[23rem] mt-5 active:bg-red-400 max-sm:w-[20.5rem]'>Subscribe to monthly newsletter</button>
           </form>
         </div>
         <div className='mr-10 mt-6 max-sm:m-0 max-sm:h-6/12 flex'>
